@@ -50,15 +50,15 @@ class AppendableObjectOutputStream extends ObjectOutputStream {
 
 class Student implements Serializable
 {
-
-	String name, gender, program, user, pass, confirmps;				 //Data Members
+    //Data Members
+	String name, gender, program, user, pass, confirmps;				
 	int id, admyear,acdyear, contactno, sem, noofsub , flag = 0;
-	String sub[] = new String[20];			                             //Array of Strings
-	int mark[] = new int[20];											 //Array of Integers	
-	char grade[] = new char[20];										 //Array of Characters
+	String sub[] = new String[20];			                             
+	int mark[] = new int[20];											 	
+	char grade[] = new char[20];										
 
-                                                                         //Methods
-	void displaysub()													 //Displays Subject Details
+    //Displays Subject Details                                                                      
+	void displaysub()													
 	{
 		System.out.println("\t|       Subject          Marks    Grade       |");
 		System.out.println("\t+---------------------------------------------+");
@@ -69,7 +69,8 @@ class Student implements Serializable
 	   	System.out.println(String.format("\t+---------------------------------------------+"));
 	}
 
-	void addsub()														 //Get Subject Details
+    //Get Subject Details
+	void addsub()														 
 	{
 			Scanner sc = new Scanner(System.in);
 			
@@ -87,7 +88,7 @@ class Student implements Serializable
 				mark[i] = Integer.parseInt(sc.nextLine());
 			}
 
-										//Business Cycle Calculate the Grade based on the Mark Achieved
+										
 			for(int i=0; i<noofsub;i++)
 				if (mark[i] >= 90 && mark[i] <=100)
 					grade[i] = 'A';
@@ -105,8 +106,8 @@ class Student implements Serializable
         sc.close();
 	}
 	
-
-	void display(int isAdmin)									//Display Student Details
+    //Display Student Details
+	void display(int isAdmin)									
 	{
 		System.out.println(String.format("\t+=============================================+"));
 		System.out.println(String.format("\t|                                             |"));
@@ -132,7 +133,8 @@ class Student implements Serializable
 		
 	}
 
-	void displaygradesheet()											//Displaying Grade Sheet
+    //Displaying Grade Sheet
+	void displaygradesheet()											
 	{
 		System.out.println("\t+=============================================+");
 		System.out.println("\t|                                             |");
@@ -142,7 +144,8 @@ class Student implements Serializable
 		displaysub();
 	}
 
-	void addstudent()										    //Get Student Details from admin
+    //Get Student Details from admin
+	void addstudent()										    
 	{
 				Scanner sc = new Scanner(System.in);
 				int flag = 0;
@@ -203,13 +206,14 @@ class Student implements Serializable
 
 class Menus 
 {
+    //Admin Login Administration
 	String username,password; 					
 
-    public void adminlogin()					 //Admin Login Administration
+    public void adminlogin()					 
     {
     	int flag = 0;
 	    username = "Admin123";
-	    password = "mahedubai";
+	    password = "123admin";
 	    Student s = new Student();
 
 	    Scanner input1 = new Scanner(System.in);
@@ -238,7 +242,8 @@ class Menus
         input2.close();
 	}
 
-	public void studentlogin()					//Student Login Authentication
+    //Student Login Authentication
+	public void studentlogin()					
 	{
 		Scanner sc = new Scanner(System.in);
 		
@@ -256,7 +261,7 @@ class Menus
 		        ObjectInputStream ois = new ObjectInputStream(fis);
 		        Student s1 = (Student) ois.readObject();
 
-		        while(s1!=null)						//Read Records
+		        while(s1!=null)						
 		        {
 		        	try
 		        	{
@@ -299,7 +304,8 @@ class Menus
             sc.close();
 	}
     
-    public static void addStudentsToFile()					//For Admin 
+    //For Admin
+    public static void addStudentsToFile()					 
 	{
 		Student s1[] =  new Student[20],s;
 		Scanner sc = new Scanner(System.in);
@@ -324,7 +330,7 @@ class Menus
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             
-			while(s1[i]!=null)							//Writing Records to the File
+			while(s1[i]!=null)							
 			{
 
 				s = s1[i];
@@ -346,8 +352,8 @@ class Menus
         sc.close();
     }
 
-
-    public static void appendStudents()			//Appends multiple records into the Binary File
+    //Appends multiple records into the Binary File
+    public static void appendStudents()			
 	{
 		
 		Student s1[] =  new Student[20],s;
@@ -368,14 +374,14 @@ class Menus
 		int i=0;
 
 		File f = new File("Students.dat");
-		boolean append = f.exists();  // if file exists then append, otherwise create new
+		boolean append = f.exists();  
 
 		try 
 		{
 	        FileOutputStream fos = new FileOutputStream(f,append);
 		    AppendableObjectOutputStream oos = new AppendableObjectOutputStream(fos,append);
 			
-			while(s1[i]!=null)						//Appending Records to the file
+			while(s1[i]!=null)						
 			{
 
 				s = s1[i];
@@ -410,9 +416,9 @@ class Menus
 		        ObjectInputStream ois = new ObjectInputStream(fis);
 		        Student s1 = (Student) ois.readObject();
 
-		        while(s1 != null)			//Reading all Records from the Binary File	
+		        while(s1 != null)				
 		        {
-		            s1.display(1);			//Printing all Records 
+		            s1.display(1);			 
 
 					s1 = (Student) ois.readObject();
 					flag = 1;
@@ -447,7 +453,7 @@ class Menus
 	        }
 	}
 
-	public static void searchStud(String user, String pass, int isStudent)			//O for Admin 1 for student Indicator
+	public static void searchStud(String user, String pass, int isStudent)			
 	{
 		File f = new File("Students.dat");
 		int flag = 0;
@@ -458,7 +464,7 @@ class Menus
 				FileInputStream fis = new FileInputStream(f);
 		        ObjectInputStream ois = new ObjectInputStream(fis);
 				
-				if(isStudent == 0)					//For Admin
+				if(isStudent == 0)					
 				{
 
 					System.out.println("\t+=============================================+");
@@ -491,7 +497,7 @@ class Menus
 							s1 = (Student) ois.readObject();
 			        	}
 
-						catch(EOFException e)    			//Reached End of File
+						catch(EOFException e)    			
 						{
 							//e.printStackTrace();
 							break; 
@@ -507,7 +513,7 @@ class Menus
                     ois.close();
 				}
 
-				if(isStudent == 1)				//For Student
+				if(isStudent == 1)				
 				{
 
 					System.out.println("\t+=============================================+");
@@ -528,7 +534,7 @@ class Menus
 			        	{
 
 				            if(s1.id == id && s1.user.equals(user) && s1.pass.equals(pass))		
-				            						//Validate entered student user, pass with student user, pass from File
+				            						
 				            {	
 				            	s1.display(0);
 				            	System.out.println("\n");
@@ -538,7 +544,7 @@ class Menus
 							s1 = (Student) ois.readObject();
 			        	}
 
-							catch(EOFException e)    			//Reached End of File
+							catch(EOFException e)    			
 							{
 								break; 
 							}
@@ -577,7 +583,8 @@ class Menus
 		    }
 	}	
 
-	public void deleteStud()					//Asks the Admin for the ID And Deletes the Appropriate Record from the Binary File
+    //Asks the Admin for the ID And Deletes the Appropriate Record from the Binary File
+	public void deleteStud()					
 	{	
 		File oldFile = new File("Students.dat");
 		int i = 0,flag = 0;
@@ -602,12 +609,12 @@ class Menus
 		        ObjectInputStream ois = new ObjectInputStream(fis);
 		        Student s = (Student) ois.readObject();	
 
-		        Student s1[] = new Student[20];   		//ARRAY OF OBJECTS of class Student
+		        Student s1[] = new Student[20];   		
 		        
 		        System.out.print("\tEnter the id of the Student you want to delete: ");
 		        int id = sc.nextInt();
 
-		        while(s != null)			 	//Reading Loop to Store our Records into the Array of Students
+		        while(s != null)			 	
 		        {	
 					try
 					{			
@@ -638,7 +645,7 @@ class Menus
 
 					i=0;
 
-			    	while(s1[i]!=null)					//Write Loop to Write our Records from the Array of Students 
+			    	while(s1[i]!=null)					
 					{
 						try
 						{
@@ -721,26 +728,26 @@ class Menus
 			        ObjectInputStream ois = new ObjectInputStream(fis);
 			        Student s = (Student) ois.readObject();	
 
-			        Student s1[] = new Student[20]; 		//ARRAY OF OBJECTS of class Student
+			        Student s1[] = new Student[20]; 		
 			        
 			        System.out.print("\tEnter the id of the Student you want to edit: ");
-			        int id = sc.nextInt();					//102	
+			        int id = sc.nextInt();						
 			        System.out.println("");
 
 			        
-	 				while(s != null)			 			//Reading Loop to Store our Records into the Array of Students
+	 				while(s != null)			 			
 			        {	
 						try
 						{			
 							s1[i] = new Student();		
-							if(s.id != id)					//NOT EQUAL TO ID
+							if(s.id != id)					
 							{
 								s1[i] = s;	
-								//s1[i].display(1);			//Printing all the record having S1.id not EQUAL TO ID
+								//s1[i].display(1);			
 							}	
-							else if(s.id == id)   			//EQUAL TO ID
+							else if(s.id == id)   			
 							{	
-								s1[i].addstudent();			//New data
+								s1[i].addstudent();			
 								s1[i].addsub();	
 
 								flag = 1;		
@@ -763,11 +770,11 @@ class Menus
 				 	{
 				 		i = 0;
 
-					    File newFile = new File("Students.dat");		//Overwrites and creates a Blank Students.dat
+					    File newFile = new File("Students.dat");		
 				 		FileOutputStream fos = new FileOutputStream(newFile);
 				        ObjectOutputStream oos = new ObjectOutputStream(fos);
 						
-				    	while(s1[i]!=null)					//Write Loop to Write our Records from the Array of Students 
+				    	while(s1[i]!=null)					
 						{
 							try
 							{
@@ -823,7 +830,7 @@ class Menus
 			}while(choice == 'Y' || choice == 'y');
 	}	
 		        
-	public static void gradeSheet(String user, String pass)			//Displaying Grade Sheet Business Cycle Part 2
+	public static void gradeSheet(String user, String pass)			
 	{
 		File f = new File("Students.dat");
 		int flag = 0;
@@ -842,7 +849,7 @@ class Menus
 			    {
 			    	try
 			    	{
-			            if(s1.id == id && s1.user.equals(user) && s1.pass.equals(pass))		//2 Step Authentication
+			            if(s1.id == id && s1.user.equals(user) && s1.pass.equals(pass))		
 			            {	
 			            	s1.displaygradesheet();
 			            	System.out.println("\n");
@@ -886,7 +893,7 @@ class Menus
 		    }
 	}
 
-	void adminmenu()						//Displayed after Login
+	void adminmenu()						
 	{
 		
 		Scanner sc = new Scanner(System.in);
@@ -947,7 +954,7 @@ class Menus
         sc.close();
 	}
 
-	void studentmenu(String username,String password) 		//Displayed after Login
+	void studentmenu(String username,String password) 		
 	{
 		int flag=0,choice;
 		Scanner sc = new Scanner(System.in);
@@ -993,7 +1000,7 @@ class Menus
         sc.close();
 	}
 
-	void mainmenu()						//Welcome Screen Displayed on Startup
+	void mainmenu()						
 	{
 		Scanner sc = new Scanner(System.in);
 
